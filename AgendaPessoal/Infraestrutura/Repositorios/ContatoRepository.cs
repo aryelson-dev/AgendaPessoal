@@ -1,33 +1,40 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infraestrutura.Contextos;
 
 namespace Infraestrutura.Repositorios
 {
     internal class ContatoRepository : IContatoRepository
     {
-        public Task AdicionaContato(Contato contato)
+        private readonly AgendaPessoalContext _agendaPessoalContext;
+        public ContatoRepository(AgendaPessoalContext agendaPessoalContext)
         {
-            throw new NotImplementedException();
+            _agendaPessoalContext = agendaPessoalContext;
         }
 
-        public Task AtualizaContato(Contato contato)
+        public async Task AdicionaContatoAsync(Contato contato)
         {
-            throw new NotImplementedException();
+            await _agendaPessoalContext.Contatos.AddAsync(contato);
         }
 
-        public Task<IList<Contato>> BuscaContatos()
+        public async Task AtualizaContatoAsync(Contato contato)
         {
-            throw new NotImplementedException();
+            _agendaPessoalContext.Contatos.Update(contato);
         }
 
-        public Task<IList<Contato>> BuscaContatosPorNome(string nome)
+        public async Task<IList<Contato>> BuscaContatosAsync()
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(_agendaPessoalContext.Contatos.ToList());
         }
 
-        public Task ExcluiContato(Contato contato)
+        public async Task<IList<Contato>> BuscaContatosPorNomeAsync(string nome)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(_agendaPessoalContext.Contatos.Where(e => e.Nome.ToLower().Contains(nome)).ToList());
+        }
+
+        public async Task ExcluiContatoAsync(Contato contato)
+        {
+            _agendaPessoalContext.Contatos.Remove(contato);
         }
     }
 }

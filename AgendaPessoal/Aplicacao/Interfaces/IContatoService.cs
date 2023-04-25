@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Interfaces
+namespace Aplicacao.Interfaces
 {
-    public interface IContatoRepository
+    public interface IContatoService
     {
         Task<IList<Contato>> BuscaContatosPorNomeAsync(string nome);
         Task<IList<Contato>> BuscaContatosAsync();
