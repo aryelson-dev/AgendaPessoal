@@ -4,7 +4,7 @@ using Domain.Interfaces;
 
 namespace Aplicacao.Servicos
 {
-    internal class ContatoService : IContatoService
+    public class ContatoService : IContatoService
     {
         private readonly IContatoRepository _contatoRepository;
 

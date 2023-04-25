@@ -4,7 +4,7 @@ using Infraestrutura.Contextos;
 
 namespace Infraestrutura.Repositorios
 {
-    internal class ContatoRepository : IContatoRepository
+    public class ContatoRepository : IContatoRepository
     {
         private readonly AgendaPessoalContext _agendaPessoalContext;
         public ContatoRepository(AgendaPessoalContext agendaPessoalContext)

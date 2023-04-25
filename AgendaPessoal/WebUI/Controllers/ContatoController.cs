@@ -14,12 +14,14 @@ namespace Apresentacao.Controllers
             _contatoService = contatoService;
         }
 
+        [HttpGet("contatos")]
         public async Task<IActionResult> ListaContatosAsync()
         {
             return Ok(await _contatoService.BuscaContatosAsync());
         }
 
-        public async Task<IActionResult> ListaContatosPorNomeAsync(string nome)
+        [HttpGet("contatos/{nome}")]
+        public async Task<IActionResult> ListaContatosPorNomeAsync([FromRoute] string nome)
         {
             return Ok(await _contatoService.BuscaContatosPorNomeAsync(nome));
         }
