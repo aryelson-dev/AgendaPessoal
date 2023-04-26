@@ -18,7 +18,8 @@ services.AddDbContext<AgendaPessoalContext>(options =>
 
 // Add services to the container.
 services.AddScoped<IContatoRepository, ContatoRepository>();
-services.AddScoped<IContatoService, ContatoService>();
+services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+services.AddScoped<IAgendaService, AgendaService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

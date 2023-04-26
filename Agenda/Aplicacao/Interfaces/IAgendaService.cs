@@ -2,7 +2,7 @@
 
 namespace Aplicacao.Interfaces
 {
-    public interface IContatoService
+    public interface IAgendaService
     {
         Task<IList<ContatoDto>> BuscaContatosPorNomeAsync(string nome);
         Task<IList<ContatoDto>> BuscaContatosAsync();

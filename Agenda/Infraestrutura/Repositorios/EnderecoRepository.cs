@@ -4,11 +4,12 @@ using Infraestrutura.Contextos;
 
 namespace Infraestrutura.Repositorios
 {
-    public class EnderecoRepository : IEnderecoRepository
+    public class EnderecoRepository : MainRepository, IEnderecoRepository
     {
         private readonly AgendaPessoalContext _agendaPessoalContext;
         
         public EnderecoRepository(AgendaPessoalContext agendaPessoalContext)
+            : base(agendaPessoalContext)
         {
             _agendaPessoalContext = agendaPessoalContext;
         }
@@ -37,11 +38,6 @@ namespace Infraestrutura.Repositorios
         public async Task ExcluiEnderecoAsync(Endereco endereco)
         {
             _agendaPessoalContext.Endereco.Remove(endereco);
-        }
-
-        public async Task Salva()
-        {
-            await _agendaPessoalContext.SaveChangesAsync();
         }
     }
 }

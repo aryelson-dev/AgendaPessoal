@@ -8,9 +8,9 @@ namespace Apresentacao.Controllers
     [Route("api/v1/[controller]")]
     public class ContatoController : ControllerBase
     {
-        private readonly IContatoService _contatoService;
+        private readonly IAgendaService _contatoService;
 
-        public ContatoController(IContatoService contatoService)
+        public ContatoController(IAgendaService contatoService)
         {
             _contatoService = contatoService;
         }

@@ -3,26 +3,42 @@ using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
-using System;
 
 namespace Aplicacao.Servicos
 {
-    public class ContatoService : IContatoService
+    public class AgendaService : IAgendaService
     {
-        private readonly IContatoRepository _contatoRepository;
         private readonly IMapper _mapper;
+        private readonly IContatoRepository _contatoRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
 
-        public ContatoService(IContatoRepository contatoRepository,
-            IMapper mapper)
+        public AgendaService(IMapper mapper,
+            IContatoRepository contatoRepository,
+            IEnderecoRepository enderecoRepository)
         {
-            _contatoRepository = contatoRepository;
             _mapper = mapper;
+            _contatoRepository = contatoRepository;
+            _enderecoRepository = enderecoRepository;
         }
 
         public async Task AdicionaContatoAsync(ContatoDto contatoDto)
         {
             var contato = _mapper.Map<Contato>(contatoDto);
             await _contatoRepository.AdicionaContatoAsync(contato);
+
+            var endereco = contato.Endereco;
+            var haEnderecoParaAdicionar = endereco != null && endereco.Id.Equals(Guid.Empty) && endereco.Cep > 0;
+            var haEnderecoParaAtualizar = endereco != null && !endereco.Id.Equals(Guid.Empty) && endereco.Cep > 0;
+
+            if (haEnderecoParaAdicionar)
+            {
+                await _enderecoRepository.AdicionaEnderecoAsync(endereco);
+            }
+
+            if (haEnderecoParaAtualizar)
+            {
+                await _enderecoRepository.AtualizaEnderecoAsync(endereco);
+            }
 
             await _contatoRepository.Salva();
         }
@@ -31,6 +47,20 @@ namespace Aplicacao.Servicos
         {
             var contato = await _contatoRepository.BuscaContatoPorId(contatoDto.Id)
                     ?? throw new Exception("O Contato foi foi encontrado na base de dados");
+
+            var endereco = contato.Endereco;
+            var haEnderecoParaAdicionar = endereco != null && endereco.Id.Equals(Guid.Empty) && endereco.Cep > 0;
+            var haEnderecoParaAtualizar = endereco != null && !endereco.Id.Equals(Guid.Empty) && endereco.Cep > 0;
+
+            if (haEnderecoParaAdicionar)
+            {
+                await _enderecoRepository.AdicionaEnderecoAsync(endereco);
+            }
+
+            if (haEnderecoParaAtualizar)
+            {
+                await _enderecoRepository.AtualizaEnderecoAsync(endereco);
+            }
 
             await _contatoRepository.AtualizaContatoAsync(contato);
             await _contatoRepository.Salva();

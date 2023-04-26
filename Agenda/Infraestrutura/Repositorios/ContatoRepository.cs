@@ -4,10 +4,12 @@ using Infraestrutura.Contextos;
 
 namespace Infraestrutura.Repositorios
 {
-    public class ContatoRepository : IContatoRepository
+    public class ContatoRepository : MainRepository, IContatoRepository
     {
         private readonly AgendaPessoalContext _agendaPessoalContext;
+
         public ContatoRepository(AgendaPessoalContext agendaPessoalContext)
+            : base(agendaPessoalContext)
         {
             _agendaPessoalContext = agendaPessoalContext;
         }
@@ -41,11 +43,6 @@ namespace Infraestrutura.Repositorios
         public async Task ExcluiContatoAsync(Contato contato)
         {
             _agendaPessoalContext.Contato.Remove(contato);
-        }
-
-        public async Task Salva()
-        {
-            await _agendaPessoalContext.SaveChangesAsync();
         }
     }
 }
