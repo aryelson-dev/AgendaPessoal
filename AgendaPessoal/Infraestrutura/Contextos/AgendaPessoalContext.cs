@@ -11,8 +11,8 @@ namespace Infraestrutura.Contextos
         {
         }
 
-        public DbSet<Contato> Contatos { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Contato> Contato { get; set; }
+        public DbSet<Endereco> Endereco { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
