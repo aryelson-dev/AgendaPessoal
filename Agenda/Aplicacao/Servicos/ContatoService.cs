@@ -1,4 +1,6 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 
@@ -7,33 +9,44 @@ namespace Aplicacao.Servicos
     public class ContatoService : IContatoService
     {
         private readonly IContatoRepository _contatoRepository;
+        private readonly IMapper _mapper;
 
-        public ContatoService(IContatoRepository contatoRepository)
+        public ContatoService(IContatoRepository contatoRepository,
+            IMapper mapper)
         {
             _contatoRepository = contatoRepository;
+            _mapper = mapper;
         }
 
-        public Task AdicionaContatoAsync(Contato contato)
+        public async Task AdicionaContatoAsync(ContatoDto contatoDto)
         {
-            return _contatoRepository.AdicionaContatoAsync(contato);
+            var contato = _mapper.Map<Contato>(contatoDto);
+            await _contatoRepository.AdicionaContatoAsync(contato);
+
+            await _contatoRepository.Salva();
         }
 
-        public Task AtualizaContatoAsync(Contato contato)
+        public async Task AtualizaContatoAsync(ContatoDto contatoDto)
         {
-            return _contatoRepository.AtualizaContatoAsync(contato);
+            var contato = _mapper.Map<Contato>(contatoDto);
+            await _contatoRepository.AtualizaContatoAsync(contato);
         }
 
-        public Task<IList<Contato>> BuscaContatosAsync()
+        public async Task<IList<ContatoDto>> BuscaContatosAsync()
         {
-            return _contatoRepository.BuscaContatosAsync();
+            var contatos = await _contatoRepository.BuscaContatosAsync();
+            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e)).ToList();
+            return contatosDto;
         }
 
-        public Task<IList<Contato>> BuscaContatosPorNomeAsync(string nome)
+        public async Task<IList<ContatoDto>> BuscaContatosPorNomeAsync(string nome)
         {
-            return _contatoRepository.BuscaContatosPorNomeAsync(nome);
+            var contatos = await _contatoRepository.BuscaContatosPorNomeAsync(nome);
+            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e)).ToList();
+            return contatosDto;
         }
 
-        public Task ExcluiContatoAsync(Contato contato)
+        public async Task ExcluiContatoAsync(ContatoDto contato)
         {
             throw new NotImplementedException();
         }

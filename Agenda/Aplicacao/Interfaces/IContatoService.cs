@@ -1,13 +1,13 @@
-﻿using Domain.Entities;
+﻿using Aplicacao.Dtos;
 
 namespace Aplicacao.Interfaces
 {
     public interface IContatoService
     {
-        Task<IList<Contato>> BuscaContatosPorNomeAsync(string nome);
-        Task<IList<Contato>> BuscaContatosAsync();
-        Task AdicionaContatoAsync(Contato contato);
-        Task AtualizaContatoAsync(Contato contato);
-        Task ExcluiContatoAsync(Contato contato);
+        Task<IList<ContatoDto>> BuscaContatosPorNomeAsync(string nome);
+        Task<IList<ContatoDto>> BuscaContatosAsync();
+        Task AdicionaContatoAsync(ContatoDto contato);
+        Task AtualizaContatoAsync(ContatoDto contato);
+        Task ExcluiContatoAsync(ContatoDto contato);
     }
 }

@@ -9,5 +9,6 @@ namespace Domain.Interfaces
         Task AdicionaContatoAsync(Contato contato);
         Task AtualizaContatoAsync(Contato contato);
         Task ExcluiContatoAsync(Contato contato);
+        Task Salva();
     }
 }

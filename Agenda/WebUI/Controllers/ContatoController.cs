@@ -1,4 +1,5 @@
-﻿using Aplicacao.Interfaces;
+﻿using Aplicacao.Dtos;
+using Aplicacao.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Apresentacao.Controllers
@@ -24,6 +25,12 @@ namespace Apresentacao.Controllers
         public async Task<IActionResult> ListaContatosPorNomeAsync([FromRoute] string nome)
         {
             return Ok(await _contatoService.BuscaContatosPorNomeAsync(nome));
+        }
+
+        [HttpPost("adiciona")]
+        public async Task AdicionaContatoAsync([FromBody] ContatoDto contato)
+        {
+            await _contatoService.AdicionaContatoAsync(contato);
         }
     }
 }

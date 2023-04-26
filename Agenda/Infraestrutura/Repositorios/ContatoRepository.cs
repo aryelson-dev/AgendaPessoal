@@ -36,5 +36,10 @@ namespace Infraestrutura.Repositorios
         {
             _agendaPessoalContext.Contato.Remove(contato);
         }
+
+        public async Task Salva()
+        {
+            await _agendaPessoalContext.SaveChangesAsync();
+        }
     }
 }
