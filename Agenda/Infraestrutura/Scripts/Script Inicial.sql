@@ -1,8 +1,8 @@
 use[master]
 go
 
---create database agenda
---go
+create database agenda
+go
 
 use[agenda]
 go
