@@ -3,6 +3,7 @@ using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using System;
 
 namespace Aplicacao.Servicos
 {
@@ -28,8 +29,11 @@ namespace Aplicacao.Servicos
 
         public async Task AtualizaContatoAsync(ContatoDto contatoDto)
         {
-            var contato = _mapper.Map<Contato>(contatoDto);
+            var contato = await _contatoRepository.BuscaContatoPorId(contatoDto.Id)
+                    ?? throw new Exception("O Contato foi foi encontrado na base de dados");
+
             await _contatoRepository.AtualizaContatoAsync(contato);
+            await _contatoRepository.Salva();
         }
 
         public async Task<IList<ContatoDto>> BuscaContatosAsync()
@@ -46,9 +50,20 @@ namespace Aplicacao.Servicos
             return contatosDto;
         }
 
-        public async Task ExcluiContatoAsync(ContatoDto contato)
+        public async Task RemoveContatoAsync(string id)
         {
-            throw new NotImplementedException();
+            if (Guid.TryParse(id, out Guid guid))
+            {
+                var contato = await _contatoRepository.BuscaContatoPorId(guid)
+                    ?? throw new Exception("O Contato foi foi encontrado na base de dados");
+
+                await _contatoRepository.AtualizaContatoAsync(contato);
+                await _contatoRepository.Salva();
+            }
+            else
+            {
+                throw new Exception($"O id informado [{id}] é inválido");
+            }
         }
     }
 }

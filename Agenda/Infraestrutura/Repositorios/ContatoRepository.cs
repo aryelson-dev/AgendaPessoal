@@ -22,6 +22,12 @@ namespace Infraestrutura.Repositorios
             _agendaPessoalContext.Contato.Update(contato);
         }
 
+        public Task<Contato> BuscaContatoPorId(Guid id)
+        {
+            var result = _agendaPessoalContext.Contato.FirstOrDefault(e => e.Id.Equals(id));
+            return result != null ? Task.FromResult(result) : Task.FromResult(new Contato());
+        }
+
         public async Task<IList<Contato>> BuscaContatosAsync()
         {
             return await Task.FromResult(_agendaPessoalContext.Contato.ToList());

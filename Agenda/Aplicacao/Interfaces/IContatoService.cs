@@ -8,6 +8,6 @@ namespace Aplicacao.Interfaces
         Task<IList<ContatoDto>> BuscaContatosAsync();
         Task AdicionaContatoAsync(ContatoDto contato);
         Task AtualizaContatoAsync(ContatoDto contato);
-        Task ExcluiContatoAsync(ContatoDto contato);
+        Task RemoveContatoAsync(string id);
     }
 }

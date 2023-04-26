@@ -32,5 +32,17 @@ namespace Apresentacao.Controllers
         {
             await _contatoService.AdicionaContatoAsync(contato);
         }
+
+        [HttpPut("atualiza")]
+        public async Task AtualizaContatoAsync([FromBody] ContatoDto contato)
+        {
+            await _contatoService.AtualizaContatoAsync(contato);
+        }
+
+        [HttpDelete("remove/{id}")]
+        public async Task RemoveContatoAsync([FromRoute] string id)
+        {
+            await _contatoService.RemoveContatoAsync(id);
+        }
     }
 }
