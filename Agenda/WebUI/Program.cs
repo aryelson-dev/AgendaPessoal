@@ -20,6 +20,7 @@ services.AddDbContext<AgendaContext>(options =>
 services.AddScoped<IContatoRepository, ContatoRepository>();
 services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 services.AddScoped<IAgendaService, AgendaService>();
+services.AddScoped<ICorreiosService, CorreiosService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
