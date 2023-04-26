@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-services.AddDbContext<AgendaPessoalContext>(options =>
+services.AddDbContext<AgendaContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("Default"));
 });

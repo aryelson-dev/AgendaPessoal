@@ -6,9 +6,9 @@ namespace Infraestrutura.Repositorios
 {
     public class ContatoRepository : MainRepository, IContatoRepository
     {
-        private readonly AgendaPessoalContext _agendaPessoalContext;
+        private readonly AgendaContext _agendaPessoalContext;
 
-        public ContatoRepository(AgendaPessoalContext agendaPessoalContext)
+        public ContatoRepository(AgendaContext agendaPessoalContext)
             : base(agendaPessoalContext)
         {
             _agendaPessoalContext = agendaPessoalContext;

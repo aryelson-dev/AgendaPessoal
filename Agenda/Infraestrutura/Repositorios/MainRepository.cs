@@ -4,15 +4,15 @@ namespace Infraestrutura.Repositorios
 {
     public abstract class MainRepository
     {
-        private readonly AgendaPessoalContext _agendaPessoalContext;
-        public MainRepository(AgendaPessoalContext agendaPessoalContext)
+        private readonly AgendaContext _agendaContext;
+        public MainRepository(AgendaContext agendaContext)
         {
-            _agendaPessoalContext = agendaPessoalContext;
+            _agendaContext = agendaContext;
         }
 
         public async Task Salva()
         {
-            await _agendaPessoalContext.SaveChangesAsync();
+            await _agendaContext.SaveChangesAsync();
         }
     }
 }

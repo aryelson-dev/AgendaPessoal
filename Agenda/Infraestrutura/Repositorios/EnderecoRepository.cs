@@ -6,9 +6,9 @@ namespace Infraestrutura.Repositorios
 {
     public class EnderecoRepository : MainRepository, IEnderecoRepository
     {
-        private readonly AgendaPessoalContext _agendaPessoalContext;
+        private readonly AgendaContext _agendaPessoalContext;
         
-        public EnderecoRepository(AgendaPessoalContext agendaPessoalContext)
+        public EnderecoRepository(AgendaContext agendaPessoalContext)
             : base(agendaPessoalContext)
         {
             _agendaPessoalContext = agendaPessoalContext;

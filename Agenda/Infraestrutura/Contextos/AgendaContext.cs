@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace Infraestrutura.Contextos
 {
-    public class AgendaPessoalContext : DbContext
+    public class AgendaContext : DbContext
     {
-        public AgendaPessoalContext(DbContextOptions<AgendaPessoalContext> options)
+        public AgendaContext(DbContextOptions<AgendaContext> options)
             : base(options)
         {
         }

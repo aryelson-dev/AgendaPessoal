@@ -27,17 +27,10 @@ namespace Aplicacao.Servicos
             await _contatoRepository.AdicionaContatoAsync(contato);
 
             var endereco = contato.Endereco;
-            var haEnderecoParaAdicionar = endereco != null && endereco.Id.Equals(Guid.Empty) && endereco.Cep > 0;
-            var haEnderecoParaAtualizar = endereco != null && !endereco.Id.Equals(Guid.Empty) && endereco.Cep > 0;
 
-            if (haEnderecoParaAdicionar)
+            if (endereco != null && endereco.Cep > 0)
             {
                 await _enderecoRepository.AdicionaEnderecoAsync(endereco);
-            }
-
-            if (haEnderecoParaAtualizar)
-            {
-                await _enderecoRepository.AtualizaEnderecoAsync(endereco);
             }
 
             await _contatoRepository.Salva();
