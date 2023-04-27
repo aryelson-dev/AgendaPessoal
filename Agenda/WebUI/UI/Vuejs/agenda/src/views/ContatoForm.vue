@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed, toRaw } from 'vue'
+import { ref, computed, onMounted, toRaw } from 'vue'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import alerta from '../utils.js'
 
 let cep = ref('')
@@ -25,6 +25,32 @@ let endereco = ref({
 })
 
 const router = useRouter()
+const route = useRoute()
+
+onMounted(() => {
+    const id = route.params.id
+
+    if(id && id != 'add') {
+        console.log('edit')
+        axios.get('https://localhost:7165/api/v1/contato/lista/' + id)
+            .then(result => {
+                if(!result.data){
+                    alerta('Ocorreu um erro ao buscar o contato no sistema', 'danger')
+                }else{
+                    // console.log(result.data)
+                    // console.log(result.data.endereco)
+                    
+                    contatoform.value = result.data
+                    if(result.data && result.data.endereco){
+                        cep.value = result.data.endereco.cep
+                        endereco.value = result.data.endereco
+                    }
+                }
+            })
+    }else{
+        console.log('novo')
+    }
+})
 
 let enderecoPreenchido = computed(() => {
 
@@ -69,7 +95,7 @@ function salva(){
 
 function cancela(){
     contatoform = {}
-    router.push('/contato')
+    router.push('/contatos')
 }
 
 function validaForm () {
@@ -88,7 +114,7 @@ function validaForm () {
 
     <div class="fs-1 text">
         Novo Contato
-        {{ enderecoPreenchido }}
+        <!-- {{ enderecoPreenchido }} -->
     </div>
 
         <div class="mb-3">
@@ -147,4 +173,6 @@ function validaForm () {
 
         <button @click="salva" type="submit" class="btn btn-primary">Cadastrar</button>
         <button @click="cancela" type="submit" class="btn btn-secondary" style="margin-left: 5px;">Cancelar</button>
+        <br>
+        <br>
 </template>

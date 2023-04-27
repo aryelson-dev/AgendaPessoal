@@ -12,8 +12,8 @@ const router = createRouter({
       component: Contato
     },
     {
-      path: '/contato',
-      name: 'contato',
+      path: '/contatos',
+      name: 'contatos',
       component: Contato
     },
     {
@@ -22,9 +22,10 @@ const router = createRouter({
       component: Compromisso
     },
     {
-      path: '/novocontato',
-      name: 'novocontato',
-      component: ContatoForm
+      path: '/contato/:id',
+      name: 'contato',
+      component: ContatoForm,
+      props: true
     }
   ]
 })

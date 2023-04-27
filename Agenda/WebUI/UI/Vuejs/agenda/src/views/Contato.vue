@@ -19,25 +19,7 @@
     })
 
     function editar(id){
-
-        axios.get('https://localhost:7165/api/v1/contato/lista/' + id)
-            .then(result => {
-                if(!result.data){
-                    alerta('Ocorreu um erro ao buscar o contato no sistema', 'danger')
-                }else{
-                    router.push('/novocontato')
-                }
-            })
-        
-        .then(result => {
-            
-        })
-
-        // axios.push('https://localhost:7165/api/v1/contato/atualiza')
-        //     .then(result => {
-        //     contatos.value = result.data
-        //     alerta('Contato alterado com sucesso', 'success')
-        // })
+        router.push({path: '/contato/' + id })
     }
 
     function excluir(id){
@@ -69,7 +51,7 @@
             </div>
             <div class="col">
                 <router-link
-                    to="/novocontato"
+                    to="/contato/add"
                     custom
                     v-slot="{ navigate }"
                     >

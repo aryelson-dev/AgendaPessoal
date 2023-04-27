@@ -27,7 +27,10 @@ namespace Infraestrutura.Repositorios
 
         public Task<Contato> BuscaContatoPorIdAsync(Guid id)
         {
-            var result = _agendaPessoalContext.Contato.FirstOrDefault(e => e.Id.Equals(id));
+            var result = _agendaPessoalContext.Contato
+                .Include(e => e.Endereco)
+                .FirstOrDefault(e => e.Id.Equals(id));
+
             return result != null ? Task.FromResult(result) : Task.FromResult(new Contato());
         }
 
