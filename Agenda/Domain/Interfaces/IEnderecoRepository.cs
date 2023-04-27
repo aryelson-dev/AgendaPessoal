@@ -4,7 +4,7 @@ namespace Domain.Interfaces
 {
     public interface IEnderecoRepository
     {
-        Task<Endereco> BuscaEnderecoPorId(Guid id);
+        Task<Endereco> BuscaEnderecoPorIdAsync(Guid id);
         Task<IList<Endereco>> BuscaEnderecosAsync();
         Task AdicionaEnderecoAsync(Endereco Endereco);
         Task AtualizaEnderecoAsync(Endereco Endereco);

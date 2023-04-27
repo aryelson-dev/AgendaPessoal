@@ -1,15 +1,13 @@
 <script setup>
   import { ref, onMounted, computed } from 'vue'
   import axios from 'axios'
+  import alerta from '../utils.js'
 
   let contatos = ref([])
   let filtroContatos = ref('')
 
     onMounted(() => {
-        axios.get('https://localhost:7165/api/v1/contato/lista')
-            .then(result => {
-            contatos.value = result.data
-        })
+        buscarContatos()
     })
 
     let listaFiltrada = computed(() => {
@@ -17,6 +15,30 @@
             return item.nome.toLowerCase().indexOf(filtroContatos.value.toLowerCase()) > -1
         })
     })
+
+    function editar(id){
+        axios.push('https://localhost:7165/api/v1/contato/atualiza')
+            .then(result => {
+            contatos.value = result.data
+        })
+    }
+
+    function excluir(id){
+        console.log(id)
+        axios.delete('https://localhost:7165/api/v1/contato/remove/' + id)
+            .then(result => {
+                buscarContatos()
+                alerta('Contato excluído com sucesso', 'success')
+        })
+    }
+
+    function buscarContatos(){
+        axios.get('https://localhost:7165/api/v1/contato/lista')
+            .then(result => {
+                contatos.value = result.data
+                alerta('Contato alterado com sucesso', 'success')
+        })
+    }
 
 </script>
 
@@ -78,8 +100,8 @@
 
                 <br>
 
-                <a href="#" class="card-link">Editar</a>
-                <a href="#" class="card-link">Excluir</a>
+                <router-link to="" @click.native="editar(contato.id)" class="card-link">Editar</router-link>
+                <router-link to="" @click.native="excluir(contato.id)" class="card-link">Excluir</router-link>
             </div>
         </div>
 

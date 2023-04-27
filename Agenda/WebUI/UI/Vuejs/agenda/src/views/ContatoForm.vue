@@ -2,6 +2,7 @@
 import { ref, computed, toRaw } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import alerta from '../utils.js'
 
 let cep = ref('')
 
@@ -45,23 +46,25 @@ let enderecoPreenchido = computed(() => {
 })
 
 function salva(){
-    let _contato = toRaw(contatoform.value)
-    let _endereco = toRaw(endereco.value)
-    _contato.endereco = null;
+    if(validaForm()){
+        let _contato = toRaw(contatoform.value)
+        let _endereco = toRaw(endereco.value)
+        _contato.endereco = null;
 
-    if(_endereco && _endereco.cep){
-        _contato.endereco = _endereco
+        if(_endereco && _endereco.cep){
+            _contato.endereco = _endereco
+        }
+
+        axios.post('https://localhost:7165/api/v1/contato/adiciona/', _contato)
+                .then(result => {
+                    contatoform.value = {}
+                    alerta('Cadastro efetuado com sucesso!', 'success')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
     }
-
-    axios.post('https://localhost:7165/api/v1/contato/adiciona/', _contato)
-            .then(result => {
-                contatoform = {}
-                alerta()
-                scrollToTop()
-            })
-            .catch(error => {
-                console.log(error)
-            })
+    
 }
 
 function cancela(){
@@ -69,35 +72,19 @@ function cancela(){
     router.push('/contato')
 }
 
-function alerta(){
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-    
-    console.log('no alerta')
-
-    const appendAlert = (message, type) => {
-        const wrapper = document.createElement('div')
-        wrapper.innerHTML = [
-            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-            `   <div>${message}</div>`,
-            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-            '</div>'
-        ].join('')
-
-        alertPlaceholder.append(wrapper)
+function validaForm () {
+    if (!contatoform.value || !contatoform.value.nome) {
+        alerta('É obrigatório preencher o campo [nome]', 'danger')
+        return false;
     }
-
-    appendAlert('Cadastro efetuado com sucesso!', 'success')
+    else {
+        return true;
+    }
 }
-
-    function scrollToTop() {
-        window.scrollTo(0,0);
-    }
 
 </script>
 
 <template>
-
-    <div id="liveAlertPlaceholder"></div>
 
     <div class="fs-1 text">
         Novo Contato
@@ -160,5 +147,4 @@ function alerta(){
 
         <button @click="salva" type="submit" class="btn btn-primary">Cadastrar</button>
         <button @click="cancela" type="submit" class="btn btn-secondary" style="margin-left: 5px;">Cancelar</button>
-
 </template>

@@ -89,8 +89,15 @@ namespace Aplicacao.Servicos
                 var contato = await _contatoRepository.BuscaContatoPorId(guid)
                     ?? throw new Exception("O Contato foi foi encontrado na base de dados");
 
-                await _contatoRepository.AtualizaContatoAsync(contato);
+                if(contato.Endereco != null)
+                {
+                    var endereco = await _enderecoRepository.BuscaEnderecoPorIdAsync(contato.Endereco.Id);
+                    await _enderecoRepository.ExcluiEnderecoAsync(endereco);
+                }
+                
+                await _contatoRepository.ExcluiContatoAsync(contato);
                 await _contatoRepository.Salva();
+
             }
             else
             {

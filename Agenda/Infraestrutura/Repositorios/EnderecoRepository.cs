@@ -24,7 +24,7 @@ namespace Infraestrutura.Repositorios
             _agendaPessoalContext.Endereco.Update(endereco);
         }
 
-        public Task<Endereco> BuscaEnderecoPorId(Guid id)
+        public Task<Endereco> BuscaEnderecoPorIdAsync(Guid id)
         {
             var result = _agendaPessoalContext.Endereco.FirstOrDefault(e => e.Id.Equals(id));
             return result != null ? Task.FromResult(result) : Task.FromResult(new Endereco());
