@@ -44,5 +44,18 @@ namespace Apresentacao.Controllers
         {
             await _contatoService.RemoveContatoAsync(id);
         }
+
+        [HttpGet("backup/download")]
+        public async Task<IActionResult> DownloadBackup()
+        {
+            var pathBackup = await _contatoService.SalvaBackupAgendaAsync();
+
+            if (!String.IsNullOrEmpty(pathBackup) && System.IO.File.Exists(pathBackup))
+            {
+                return File(System.IO.File.OpenRead(pathBackup), "application/octet-stream", Path.GetFileName(pathBackup));
+            }
+
+            return NotFound();
+        }
     }
 }

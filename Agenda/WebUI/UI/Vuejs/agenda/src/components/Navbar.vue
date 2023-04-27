@@ -13,10 +13,13 @@ export default {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-            <router-link to="/contato" class="nav-link active" aria-current="page">Contatos</router-link>
+            <router-link to="/contatos" class="nav-link active" aria-current="page">Contatos</router-link>
             </li>
             <li class="nav-item">
             <router-link to="/compromisso" class="nav-link active" aria-current="page">Compromissos</router-link>
+            </li>
+            <li class="nav-item">
+            <router-link to="/backup" class="nav-link active" aria-current="page">Backup</router-link>
             </li>
         </ul>
         </div>
