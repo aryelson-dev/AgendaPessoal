@@ -38,7 +38,10 @@ namespace Aplicacao.Servicos
 
         public async Task AtualizaContatoAsync(ContatoDto contatoDto)
         {
-            var contato = await _contatoRepository.BuscaContatoPorId(contatoDto.Id)
+            if (contatoDto == null || !contatoDto.Id.HasValue)
+                throw new Exception("Dados inválidos");
+
+            var contato = await _contatoRepository.BuscaContatoPorId(contatoDto.Id.Value)
                     ?? throw new Exception("O Contato foi foi encontrado na base de dados");
 
             var endereco = contato.Endereco;

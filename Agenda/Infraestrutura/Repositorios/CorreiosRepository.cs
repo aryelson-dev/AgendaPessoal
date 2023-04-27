@@ -32,8 +32,6 @@ namespace Infraestrutura.Repositorios
                 catch (System.Exception)
                 {
                 }
-
-                
             }
 
             return dadosCep;
