@@ -13,7 +13,7 @@
         })
     })
 
-    var listaFiltrada = computed(() => {
+    let listaFiltrada = computed(() => {
         return contatos.value.filter(item => {
             return item.nome.toLowerCase().indexOf(filtroContatos.value.toLowerCase()) > -1
         })
