@@ -62,14 +62,20 @@ namespace Aplicacao.Servicos
         public async Task<IList<ContatoDto>> BuscaContatosAsync()
         {
             var contatos = await _contatoRepository.BuscaContatosAsync();
-            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e)).ToList();
+            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e))
+                .OrderBy(e => e.Nome)
+                .ToList();
+
             return contatosDto;
         }
 
         public async Task<IList<ContatoDto>> BuscaContatosPorNomeAsync(string nome)
         {
             var contatos = await _contatoRepository.BuscaContatosPorNomeAsync(nome);
-            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e)).ToList();
+            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e))
+                .OrderBy(e => e.Nome)
+                .ToList();
+
             return contatosDto;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infraestrutura.Contextos;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestrutura.Repositorios
 {
@@ -32,12 +33,17 @@ namespace Infraestrutura.Repositorios
 
         public async Task<IList<Contato>> BuscaContatosAsync()
         {
-            return await Task.FromResult(_agendaPessoalContext.Contato.ToList());
+            return await Task.FromResult(_agendaPessoalContext.Contato
+                .Include(e => e.Endereco)
+                .ToList());
         }
 
         public async Task<IList<Contato>> BuscaContatosPorNomeAsync(string nome)
         {
-            return await Task.FromResult(_agendaPessoalContext.Contato.Where(e => e.Nome.ToLower().Contains(nome)).ToList());
+            return await Task.FromResult(_agendaPessoalContext.Contato
+                .Include(e => e.Endereco)
+                .Where(c => c.Nome.ToLower().Contains(nome))
+                .ToList());
         }
 
         public async Task ExcluiContatoAsync(Contato contato)
