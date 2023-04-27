@@ -1,10 +1,12 @@
 <script setup>
   import { ref, onMounted, computed } from 'vue'
   import axios from 'axios'
+  import { useRouter } from 'vue-router'
   import alerta from '../utils.js'
 
   let contatos = ref([])
   let filtroContatos = ref('')
+  const router = useRouter()
 
     onMounted(() => {
         buscarContatos()
@@ -17,10 +19,25 @@
     })
 
     function editar(id){
-        axios.push('https://localhost:7165/api/v1/contato/atualiza')
+
+        axios.get('https://localhost:7165/api/v1/contato/lista/' + id)
             .then(result => {
-            contatos.value = result.data
+                if(!result.data){
+                    alerta('Ocorreu um erro ao buscar o contato no sistema', 'danger')
+                }else{
+                    router.push('/novocontato')
+                }
+            })
+        
+        .then(result => {
+            
         })
+
+        // axios.push('https://localhost:7165/api/v1/contato/atualiza')
+        //     .then(result => {
+        //     contatos.value = result.data
+        //     alerta('Contato alterado com sucesso', 'success')
+        // })
     }
 
     function excluir(id){
@@ -36,7 +53,6 @@
         axios.get('https://localhost:7165/api/v1/contato/lista')
             .then(result => {
                 contatos.value = result.data
-                alerta('Contato alterado com sucesso', 'success')
         })
     }
 

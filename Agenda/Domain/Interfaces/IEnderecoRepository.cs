@@ -9,6 +9,5 @@ namespace Domain.Interfaces
         Task AdicionaEnderecoAsync(Endereco Endereco);
         Task AtualizaEnderecoAsync(Endereco Endereco);
         Task ExcluiEnderecoAsync(Endereco Endereco);
-        Task Salva();
     }
 }

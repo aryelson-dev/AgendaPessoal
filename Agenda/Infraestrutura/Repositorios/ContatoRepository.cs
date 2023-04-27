@@ -25,7 +25,7 @@ namespace Infraestrutura.Repositorios
             _agendaPessoalContext.Contato.Update(contato);
         }
 
-        public Task<Contato> BuscaContatoPorId(Guid id)
+        public Task<Contato> BuscaContatoPorIdAsync(Guid id)
         {
             var result = _agendaPessoalContext.Contato.FirstOrDefault(e => e.Id.Equals(id));
             return result != null ? Task.FromResult(result) : Task.FromResult(new Contato());
@@ -35,14 +35,6 @@ namespace Infraestrutura.Repositorios
         {
             return await Task.FromResult(_agendaPessoalContext.Contato
                 .Include(e => e.Endereco)
-                .ToList());
-        }
-
-        public async Task<IList<Contato>> BuscaContatosPorNomeAsync(string nome)
-        {
-            return await Task.FromResult(_agendaPessoalContext.Contato
-                .Include(e => e.Endereco)
-                .Where(c => c.Nome.ToLower().Contains(nome))
                 .ToList());
         }
 

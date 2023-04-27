@@ -21,10 +21,10 @@ namespace Apresentacao.Controllers
             return Ok(await _contatoService.BuscaContatosAsync());
         }
 
-        [HttpGet("lista/{nome}")]
-        public async Task<IActionResult> ListaContatosPorNomeAsync([FromRoute] string nome)
+        [HttpGet("lista/{id}")]
+        public async Task<IActionResult> ListaContatosPorIdAsync([FromRoute] string id)
         {
-            return Ok(await _contatoService.BuscaContatosPorNomeAsync(nome));
+            return Ok(await _contatoService.BuscaContatosPorIdAsync(id));
         }
 
         [HttpPost("adiciona")]

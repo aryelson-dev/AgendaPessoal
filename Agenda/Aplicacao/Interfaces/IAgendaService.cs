@@ -4,7 +4,7 @@ namespace Aplicacao.Interfaces
 {
     public interface IAgendaService
     {
-        Task<IList<ContatoDto>> BuscaContatosPorNomeAsync(string nome);
+        Task<ContatoDto> BuscaContatosPorIdAsync(string id);
         Task<IList<ContatoDto>> BuscaContatosAsync();
         Task AdicionaContatoAsync(ContatoDto contato);
         Task AtualizaContatoAsync(ContatoDto contato);

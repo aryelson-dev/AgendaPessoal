@@ -41,7 +41,7 @@ namespace Aplicacao.Servicos
             if (contatoDto == null || !contatoDto.Id.HasValue)
                 throw new Exception("Dados inválidos");
 
-            var contato = await _contatoRepository.BuscaContatoPorId(contatoDto.Id.Value)
+            var contato = await _contatoRepository.BuscaContatoPorIdAsync(contatoDto.Id.Value)
                     ?? throw new Exception("O Contato foi foi encontrado na base de dados");
 
             var endereco = contato.Endereco;
@@ -72,37 +72,37 @@ namespace Aplicacao.Servicos
             return contatosDto;
         }
 
-        public async Task<IList<ContatoDto>> BuscaContatosPorNomeAsync(string nome)
+        public async Task<ContatoDto> BuscaContatosPorIdAsync(string id)
         {
-            var contatos = await _contatoRepository.BuscaContatosPorNomeAsync(nome);
-            var contatosDto = contatos.Select(e => _mapper.Map<ContatoDto>(e))
-                .OrderBy(e => e.Nome)
-                .ToList();
-
-            return contatosDto;
+            var contato = await _contatoRepository.BuscaContatoPorIdAsync(ConvertStringParaGuid(id));
+            return _mapper.Map<ContatoDto>(contato);
         }
 
-        public async Task RemoveContatoAsync(string id)
+        public static Guid ConvertStringParaGuid(string id)
         {
             if (Guid.TryParse(id, out Guid guid))
             {
-                var contato = await _contatoRepository.BuscaContatoPorId(guid)
-                    ?? throw new Exception("O Contato foi foi encontrado na base de dados");
-
-                if(contato.Endereco != null)
-                {
-                    var endereco = await _enderecoRepository.BuscaEnderecoPorIdAsync(contato.Endereco.Id);
-                    await _enderecoRepository.ExcluiEnderecoAsync(endereco);
-                }
-                
-                await _contatoRepository.ExcluiContatoAsync(contato);
-                await _contatoRepository.Salva();
-
+                return guid;
             }
             else
             {
                 throw new Exception($"O id informado [{id}] é inválido");
             }
+        }
+
+        public async Task RemoveContatoAsync(string id)
+        {
+            var contato = await _contatoRepository.BuscaContatoPorIdAsync(ConvertStringParaGuid(id))
+                ?? throw new Exception("O Contato foi foi encontrado na base de dados");
+
+            if (contato.Endereco != null)
+            {
+                var endereco = await _enderecoRepository.BuscaEnderecoPorIdAsync(contato.Endereco.Id);
+                await _enderecoRepository.ExcluiEnderecoAsync(endereco);
+            }
+
+            await _contatoRepository.ExcluiContatoAsync(contato);
+            await _contatoRepository.Salva();
         }
     }
 }
