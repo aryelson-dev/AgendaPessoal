@@ -3,6 +3,9 @@ using Aplicacao.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using Newtonsoft.Json;
+using System.Data;
+using System.Xml;
 
 namespace Aplicacao.Servicos
 {
@@ -103,6 +106,41 @@ namespace Aplicacao.Servicos
 
             await _contatoRepository.ExcluiContatoAsync(contato);
             await _contatoRepository.Salva();
+        }
+
+        // Salva backup em uma pasta temporária e retorna o path
+        public async Task<string> SalvaBackupAgendaAsync()
+        {
+            var contatos = await _contatoRepository.BuscaContatosAsync();
+
+            if (contatos != null && contatos.Count > 0)
+            {
+                try
+                {
+                    var customDataObj = new { contatos };
+                    string json = JsonConvert.SerializeObject(customDataObj);
+                    var xmlFile = JsonConvert.DeserializeXNode(json, "Root");
+
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(xmlFile.ToString());
+
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+
+                    string path = @"c:\temp\backup_agenda_" + DateTime.Now.Ticks + ".xml";
+                    XmlWriter writer = XmlWriter.Create(path, settings);
+                    doc.Save(writer);
+
+                    writer.Close();
+
+                    return path;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Ocorreu um erro ao executar o backup: {ex.Message}");
+                }
+            }
+            return String.Empty;
         }
     }
 }

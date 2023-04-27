@@ -9,5 +9,6 @@ namespace Aplicacao.Interfaces
         Task AdicionaContatoAsync(ContatoDto contato);
         Task AtualizaContatoAsync(ContatoDto contato);
         Task RemoveContatoAsync(string id);
+        Task<string> SalvaBackupAgendaAsync();
     }
 }

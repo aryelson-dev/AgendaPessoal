@@ -7,21 +7,12 @@
                 .then(response => {
                     console.log(response)
                     if(response){
-                        // const blob = new Blob([response.data], { type: 'application/octet-stream' })
-                        // const link = document.createElement('a')
-                        // link.href = URL.createObjectURL(blob)
-                        // link.download = label
-                        // link.click()
-                        // URL.revokeObjectURL(link.href)
-
                         forceFileDownload(response, 'backup_agenda')
-
                         alerta('O backup foi efetuado com sucesso. O download terminou.', 'success')
                     }
                 })
                 .catch(error => {
-                    console.log(error)
-                    //alerta('Ocorreu um erro. Não foi possível fazer o backup', 'warning')
+                    alerta('Ocorreu um erro. Não foi possível fazer o backup', 'warning')
                 })
     }
 

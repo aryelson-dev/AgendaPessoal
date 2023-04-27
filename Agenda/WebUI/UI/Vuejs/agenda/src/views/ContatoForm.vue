@@ -31,15 +31,11 @@ onMounted(() => {
     const id = route.params.id
 
     if(id && id != 'add') {
-        console.log('edit')
         axios.get('https://localhost:7165/api/v1/contato/lista/' + id)
             .then(result => {
                 if(!result.data){
                     alerta('Ocorreu um erro ao buscar o contato no sistema', 'danger')
                 }else{
-                    // console.log(result.data)
-                    // console.log(result.data.endereco)
-                    
                     contatoform.value = result.data
                     if(result.data && result.data.endereco){
                         cep.value = result.data.endereco.cep
@@ -47,23 +43,19 @@ onMounted(() => {
                     }
                 }
             })
-    }else{
-        console.log('novo')
     }
 })
 
 let enderecoPreenchido = computed(() => {
-
     let _cep = cep.value
     if(cep && _cep.length > 7 && _cep.length < 11){
         axios.get('https://localhost:7165/api/v1/correios/cep/' + _cep)
             .then(result => {
                 if(result.data) {
-                    contatoform.value.endereco = result.data
+                    endereco.value = result.data
                 }
             })
             .catch(function (error) {
-                console.log(error);
             });
    }
    else {
@@ -87,7 +79,6 @@ function salva(){
                     alerta('Cadastro efetuado com sucesso!', 'success')
                 })
                 .catch(error => {
-                    console.log(error)
                 })
     }
     
