@@ -31,9 +31,13 @@ let enderecoPreenchido = computed(() => {
                 if(result.data) {
                     contatoform.value.endereco = result.data
                 }
-            
-            console.log(result.data)
-        })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+   }
+   else {
+    contatoform.value.endereco = {}
    }
 })
 
