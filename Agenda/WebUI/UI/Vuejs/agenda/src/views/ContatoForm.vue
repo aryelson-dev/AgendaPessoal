@@ -105,7 +105,7 @@ function validaForm () {
 
     <div class="fs-1 text">
         Novo Contato
-        <!-- {{ enderecoPreenchido }} -->
+        <div v-show="false">{{ enderecoPreenchido }}</div>
     </div>
 
         <div class="mb-3">

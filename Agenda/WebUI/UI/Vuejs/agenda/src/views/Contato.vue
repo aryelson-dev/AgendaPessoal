@@ -23,7 +23,6 @@
     }
 
     function excluir(id){
-        console.log(id)
         axios.delete('https://localhost:7165/api/v1/contato/remove/' + id)
             .then(result => {
                 buscarContatos()

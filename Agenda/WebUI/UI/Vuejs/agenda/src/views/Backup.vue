@@ -5,7 +5,6 @@
     function backup(){
         axios.get('https://localhost:7165/api/v1/contato/backup/download', { responseType: 'blob' })
                 .then(response => {
-                    console.log(response)
                     if(response){
                         forceFileDownload(response, 'backup_agenda')
                         alerta('O backup foi efetuado com sucesso. O download terminou.', 'success')
@@ -17,7 +16,6 @@
     }
 
     function forceFileDownload(response, title) {
-      console.log(title)
       const url = window.URL.createObjectURL(new Blob([response.data]))
       const link = document.createElement('a')
       link.href = url
