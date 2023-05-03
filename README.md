@@ -1,9 +1,7 @@
-# AgendaPessoal
-Uma agenda pessoal feita em .NET7.
+# AgendaPessoal DEMO
+Uma agenda pessoal feita em .NET7, em uma arquitetura CLEAN ARCHITECTURE.
 O banco de dados roda no SQL Server.
-O frontend implementado em VueJs.
-
-Esse foi um desafio feito a mim, com as seguintes caracteristicas:
+O frontend foi implementado em VueJs, com Vite e Bootstrap.
 
 Requisito de negócio (RN)
 Usuário possuir uma agenda pessoal que possa ser acessada, tanto do seu computador quanto do seu tablet e/ou
@@ -49,3 +47,14 @@ segurança dos dados e que seja bem estruturado a fim de facilitar a compreensã
 RNF #3- Hospedagem da aplicação
 A aplicação pode ser disponibilizada para que possamos executar e testar em local host, caso se sinta confortável
 para utilizar algum ambiente de hospedagem fica a critério, mas não é obrigatório.
+
+***
+
+Instruções para rodar a aplicação:
+
+Base de dados: o projeto roda no Banco de Dados SQL Server, e o script (que irá gerar a database e tabelas necessáiras) encontra-se no próprio projeto, no seguinte caminho: .../Agenda/Infraestrutura/Scripts
+
+O sistema foi implementado em uma arquitetura CLEAN ARCHITECTURE, dessa forma ele é multi camadas e totalmente 
+desacoplado. Sendo assim, a será necessário levantar dois servidores, para que a aplicação trabalhe corretamente:
+1) Servidor Backend: Para subir a API do projeto, é necessário levantar o servidor backend. Isso pode ser feito diretamente no Visual Studio, clicando em CTRL + F5 (ou somente F5 para carregar o debug), ou através da linha de comando: DOTNET RUN (executar comando no prompt, dentro do diretório ...\Agenda\WebUI>)
+2) Servidor Frondend: Para subir o frontend, será necessário levantar um servidor NODE. Isso pode ser feito através da linha de comando: NPM RUN DEV, no diretório: ...\Agenda\WebUI\ui\vuejs\agenda>. Lembrando que é necessário ter o NODE (versão recente) instalado na máquina.
