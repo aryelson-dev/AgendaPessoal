@@ -1,4 +1,4 @@
-# AgendaPessoal DEMO
+# AgendaPessoal - Clean Architecture DEMO
 Uma agenda pessoal feita em .NET7, em uma arquitetura CLEAN ARCHITECTURE.
 O banco de dados roda no SQL Server.
 O frontend foi implementado em VueJs, com Vite e Bootstrap.
